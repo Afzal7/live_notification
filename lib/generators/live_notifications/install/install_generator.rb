@@ -1,3 +1,4 @@
+require 'rails/generators/migration'
 module LiveNotifications
  module Generators
    class InstallGenerator < Rails::Generators::Base
