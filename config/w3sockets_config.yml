@@ -1,0 +1,9 @@
+development:
+  public_key: 666d13b97f61e6582136cba4fcfd528b36fcf9cd27cd23411d2ffb6c41c0c50a
+  secret_key: b2633b303e06f8ddfb29f74359d2d7061431c3eed1b740710aecc143c73c0e20
+staging:
+  public_key: ''
+  secret_key: ''
+production:
+  public_key: ''
+  secret_key: ''
