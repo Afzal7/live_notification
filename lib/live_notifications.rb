@@ -1,4 +1,5 @@
 require "live_notifications/version"
+require "live_notifications/engine"
 
 module LiveNotifications
   class W3socket
