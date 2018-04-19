@@ -1,7 +1,11 @@
+require "live_notifications/version"
+
 module LiveNotifications
-	class Temp
-		def self.test
-			p '123123123123123123'
-		end
-	end
+  class W3socket
+  	
+  	def self.init
+  		p 'init baby!!!'
+  	end
+  
+  end
 end
