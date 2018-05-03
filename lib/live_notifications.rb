@@ -25,7 +25,12 @@ module LiveNotifications
 				return {success: true}
 			
 			rescue => e
-				return {success: false, response: JSON.parse(e.as_json['response'].body), response_code: e.as_json['initial_response_code']}
+				error = e.as_json
+				if error.is_a? String
+					return {success: false, response: "#{error} - In getting access token."}
+				else
+					return {success: false, response: JSON.parse(error['response'].body), response_code: error['initial_response_code']}
+				end
 			end
 		end
 
@@ -45,8 +50,9 @@ module LiveNotifications
 			W3socket.init
 			
 			if @access_token.blank?
-				unless W3socket.get_access_token[:success]
-					return W3socket.get_access_token
+				response = W3socket.get_access_token
+				unless response[:success]
+					return response
 				end
 			end
 
@@ -64,12 +70,17 @@ module LiveNotifications
 				end
 			
 			rescue => e
-				
-				if e.as_json['initial_response_code'] == 401
+				error = e.as_json
+				if error == "401 Unauthorized" || error['initial_response_code'] == 401
 					W3socketToken.destroy_all
 					W3socket.push(channel, event, message)
 				else
-					return {success: false, response: JSON.parse(e.as_json['response'].body), response_code: e.as_json['initial_response_code']}
+					# return {success: false, response: JSON.parse(e.as_json['response'].body), response_code: e.as_json['initial_response_code']}
+					if error.is_a? String
+						return {success: false, response: "#{error} - In sending data."}
+					else
+						return {success: false, response: JSON.parse(error['response'].body), response_code: error['initial_response_code']}
+					end
 				end
 			
 			end
